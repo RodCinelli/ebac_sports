@@ -6,32 +6,23 @@ import Produtos from './containers/Produtos'
 import { setProducts } from './features/products/productsSlice'
 import { addItem } from './features/cart/cartSlice'
 import { GlobalStyle } from './styles'
-
-export type Produto = {
-  id: number
-  nome: string
-  preco: number
-  imagem: string
-  quantity?: number // Torne a propriedade opcional
-}
+import { useGetProdutosQuery, Produto } from './features/api/apiSlice'
 
 function App() {
   const dispatch = useDispatch()
-  const produtos = useSelector((state: RootState) => state.products.items)
+  const { data: produtos = [], isFetching } = useGetProdutosQuery()
   const carrinho = useSelector((state: RootState) => state.cart.items)
   const [favoritos, setFavoritos] = useState<Produto[]>([])
 
   useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/ebac_sports')
-      .then((res) => res.json())
-      .then((res) => {
-        const produtosComQuantidade = res.map((produto: Produto) => ({
-          ...produto,
-          quantity: 1 // Inicialize a quantidade como 1
-        }))
-        dispatch(setProducts(produtosComQuantidade))
-      })
-  }, [dispatch])
+    if (!isFetching && produtos.length > 0) {
+      const produtosComQuantidade = produtos.map((produto) => ({
+        ...produto,
+        quantity: 1 // Inicialize a quantidade como 1
+      }))
+      dispatch(setProducts(produtosComQuantidade))
+    }
+  }, [dispatch, isFetching, produtos])
 
   function adicionarAoCarrinho(produto: Produto) {
     if (carrinho.find((p) => p.id === produto.id)) {

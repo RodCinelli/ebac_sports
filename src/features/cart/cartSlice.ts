@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Produto } from '../../App' // Importe o tipo Produto
+import { Produto } from '../../features/api/apiSlice' // Importe o tipo Produto
 
 interface CartState {
   items: Produto[] // Use o tipo Produto
@@ -14,7 +14,6 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action: PayloadAction<Produto>) => {
-      // Use o tipo Produto
       const item = state.items.find((item) => item.id === action.payload.id)
       if (item) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

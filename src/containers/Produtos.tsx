@@ -1,4 +1,4 @@
-import { Produto as ProdutoType } from '../App'
+import { Produto as ProdutoType } from '../features/api/apiSlice'
 import Produto from '../components/Produto'
 import { useDispatch } from 'react-redux'
 import { addItem } from '../features/cart/cartSlice'
@@ -8,7 +8,7 @@ type Props = {
   produtos: ProdutoType[]
   favoritos: ProdutoType[]
   favoritar: (produto: ProdutoType) => void
-  adicionarAoCarrinho: (produto: ProdutoType) => void
+  adicionarAoCarrinho: (produto: ProdutoType) => void // Adicione esta linha
 }
 
 const ProdutosComponent = ({
@@ -21,7 +21,7 @@ const ProdutosComponent = ({
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const adicionarAoCarrinhoRedux = (produto: ProdutoType) => {
-    dispatch(addItem({ ...produto, quantity: 1 }))
+    dispatch(addItem({ ...produto, quantity: produto.quantity || 1 }))
   }
 
   const produtoEstaNosFavoritos = (produto: ProdutoType) => {
@@ -40,7 +40,7 @@ const ProdutosComponent = ({
             key={produto.id}
             produto={produto}
             favoritar={favoritar}
-            aoComprar={adicionarAoCarrinho}
+            aoComprar={adicionarAoCarrinho} // Certifique-se de que esta propriedade está correta
           />
         ))}
       </S.Produtos>

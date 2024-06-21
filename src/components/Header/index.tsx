@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Titulo, Carrinho } from './styles'
 import cesta from '../../assets/cesta.png'
 import { paraReal } from '../Produto'
-import { Produto } from '../../App'
+import { Produto } from '../../features/api/apiSlice' // Atualize esta importação
 
 type Props = {
   itensNoCarrinho: Produto[]
