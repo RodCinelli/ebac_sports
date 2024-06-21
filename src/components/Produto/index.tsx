@@ -1,5 +1,6 @@
 import { Produto as ProdutoType } from '../../App'
 import { useDispatch } from 'react-redux'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { addItem } from '../../features/cart/cartSlice'
 import * as S from './styles'
 
@@ -7,7 +8,7 @@ type Props = {
   produto: ProdutoType
   favoritar: (produto: ProdutoType) => void
   estaNosFavoritos: boolean
-  aoComprar: (produto: ProdutoType) => void // Adicione esta linha
+  aoComprar: (produto: ProdutoType) => void
 }
 
 export const paraReal = (valor: number) =>
@@ -21,12 +22,8 @@ const ProdutoComponent = ({
   estaNosFavoritos,
   aoComprar
 }: Props) => {
-  const dispatch = useDispatch()
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleAddToCart = (produto: ProdutoType) => {
-    dispatch(addItem({ id: produto.id, name: produto.nome }))
-  }
+  const dispatch = useDispatch()
 
   return (
     <S.Produto>
@@ -43,8 +40,6 @@ const ProdutoComponent = ({
           : '+ Adicionar aos favoritos'}
       </S.BtnComprar>
       <S.BtnComprar onClick={() => aoComprar(produto)} type="button">
-        {' '}
-        {/* Use a propriedade aoComprar */}
         Adicionar ao carrinho
       </S.BtnComprar>
     </S.Produto>

@@ -8,7 +8,7 @@ type Props = {
   produtos: ProdutoType[]
   favoritos: ProdutoType[]
   favoritar: (produto: ProdutoType) => void
-  adicionarAoCarrinho: (produto: ProdutoType) => void // Adicione esta linha
+  adicionarAoCarrinho: (produto: ProdutoType) => void
 }
 
 const ProdutosComponent = ({
@@ -21,7 +21,7 @@ const ProdutosComponent = ({
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const adicionarAoCarrinhoRedux = (produto: ProdutoType) => {
-    dispatch(addItem({ id: produto.id, name: produto.nome }))
+    dispatch(addItem({ ...produto, quantity: 1 }))
   }
 
   const produtoEstaNosFavoritos = (produto: ProdutoType) => {
@@ -40,7 +40,7 @@ const ProdutosComponent = ({
             key={produto.id}
             produto={produto}
             favoritar={favoritar}
-            aoComprar={adicionarAoCarrinho} // Certifique-se de que esta propriedade está correta
+            aoComprar={adicionarAoCarrinho}
           />
         ))}
       </S.Produtos>

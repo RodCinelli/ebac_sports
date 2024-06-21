@@ -12,6 +12,7 @@ export type Produto = {
   nome: string
   preco: number
   imagem: string
+  quantity?: number // Torne a propriedade opcional
 }
 
 function App() {
@@ -24,7 +25,11 @@ function App() {
     fetch('https://fake-api-tau.vercel.app/api/ebac_sports')
       .then((res) => res.json())
       .then((res) => {
-        dispatch(setProducts(res))
+        const produtosComQuantidade = res.map((produto: Produto) => ({
+          ...produto,
+          quantity: 1 // Inicialize a quantidade como 1
+        }))
+        dispatch(setProducts(produtosComQuantidade))
       })
   }, [dispatch])
 
@@ -32,7 +37,7 @@ function App() {
     if (carrinho.find((p) => p.id === produto.id)) {
       alert('Item já adicionado')
     } else {
-      dispatch(addItem({ id: produto.id, name: produto.nome }))
+      dispatch(addItem({ ...produto, quantity: 1 }))
     }
   }
 
@@ -49,7 +54,7 @@ function App() {
     <>
       <GlobalStyle />
       <div className="container">
-        <Header />
+        <Header itensNoCarrinho={carrinho} favoritos={favoritos} />
         <Produtos
           produtos={produtos}
           favoritos={favoritos}

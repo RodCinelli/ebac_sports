@@ -1,8 +1,8 @@
-// src/features/cart/cartSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Produto } from '../../App' // Importe o tipo Produto
 
 interface CartState {
-  items: { id: number; name: string; quantity: number }[]
+  items: Produto[] // Use o tipo Produto
 }
 
 const initialState: CartState = {
@@ -13,10 +13,12 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<{ id: number; name: string }>) => {
+    addItem: (state, action: PayloadAction<Produto>) => {
+      // Use o tipo Produto
       const item = state.items.find((item) => item.id === action.payload.id)
       if (item) {
-        item.quantity += 1
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        item.quantity! += 1
       } else {
         state.items.push({ ...action.payload, quantity: 1 })
       }
